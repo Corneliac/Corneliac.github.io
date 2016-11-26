@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>手把手教你封装属于自己的分段滚动视图(segmentScrollView) | Lalo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="大家好，今天我来教大家封装一个滚动视图，额，其实我也不确定它应该叫什么名字，所以我就起名字为YCSegment了。看下图大家应该就能明白是神马。。(还望各位高手指出不足)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手把手教你封装属于自己的分段滚动视图(segmentScrollView)">
+<meta property="og:url" content="http://yoursite.com/2016/04/15/foo/index.html">
+<meta property="og:site_name" content="Lalo">
+<meta property="og:description" content="大家好，今天我来教大家封装一个滚动视图，额，其实我也不确定它应该叫什么名字，所以我就起名字为YCSegment了。看下图大家应该就能明白是神马。。(还望各位高手指出不足)">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1644195-b8cddb2b1a283229.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1644195-e671e44863e5814d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1644195-7f89e11ca8726aa1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1644195-ff2c59e452502aca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1644195-8f6d8eaa3a71d2dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1644195-c7d89acb29388dc9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1644195-b8cddb2b1a283229.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2016-11-25T14:14:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手把手教你封装属于自己的分段滚动视图(segmentScrollView)">
+<meta name="twitter:description" content="大家好，今天我来教大家封装一个滚动视图，额，其实我也不确定它应该叫什么名字，所以我就起名字为YCSegment了。看下图大家应该就能明白是神马。。(还望各位高手指出不足)">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1644195-b8cddb2b1a283229.gif?imageMogr2/auto-orient/strip">
+  
+    <link rel="alternative" href="/atom.xml" title="Lalo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Lalo</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">LIFE IS SIMPLE, LOVE SMILE AND CODE</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="yoursite.com">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-foo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/15/foo/" class="article-date">
+  <time datetime="2016-04-15T05:26:29.000Z" itemprop="datePublished">2016-04-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS-Development/">iOS Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      手把手教你封装属于自己的分段滚动视图(segmentScrollView)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>大家好，今天我来教大家封装一个滚动视图，额，其实我也不确定它应该叫什么名字，所以我就起名字为YCSegment了。看下图大家应该就能明白是神马。。<br><code>(还望各位高手指出不足)</code></p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1644195-b8cddb2b1a283229.gif?imageMogr2/auto-orient/strip" alt="图片大小：225KB"></p>
+<a id="more"></a>
+<blockquote>
+<p><strong>依然推荐新手学习，这次的代码为Objective-C。</strong></p>
+<hr>
+<p>在本文中你将会学习到：</p>
+<ul>
+<li>封装</li>
+<li>懒加载</li>
+<li>协议/代理</li>
+<li>KVO（键值观察者）</li>
+<li>Target - Action 模式</li>
+<li>通过文本内容和字体计算Label的宽度或高度</li>
+</ul>
+<hr>
+</blockquote>
+<hr>
+<p>####结构如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1644195-e671e44863e5814d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片大小: 167KB"></p>
+<hr>
+<p>####首先我们从 item 开始:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1644195-7f89e11ca8726aa1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片大小: 30KB"><br><em>不包括下面橘黄色的杠杠！！</em></p>
+<p>上代码。<br>首先新建一个类，继承自UIView。我命名为：YCSegmentViewTitleItem<br>自定义一个初始化方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YCSegmentViewTitleItem</span> : <span class="title">UIView</span></span></div><div class="line"></div><div class="line"><span class="comment">///标题(我们希望可以后期更改标题)</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">copy</span>) <span class="built_in">NSString</span>  *title;</div><div class="line"><span class="comment">///间距(我们希望可以控制如果有多个item他们文字的间距)</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">assign</span>) <span class="built_in">CGFloat</span>  space;</div><div class="line">……</div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame title:(<span class="built_in">NSString</span> *)title;</div><div class="line"></div><div class="line">……</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure></p>
+<p>意图是给它一个需要显示的字符串和它的位置，然后让它自己去搞定。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YCSegmentViewTitleItem</span> ()</span></div><div class="line"></div><div class="line">……</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">UILabel</span> *titleLabel;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentViewTitleItem</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame title:(<span class="built_in">NSString</span> *)title &#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.space = <span class="number">8</span>;</div><div class="line">        <span class="keyword">self</span>.title = title;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>大家有没有发现，在这里进行了一些赋值，但是我们没有初始化titleLabel啊！<br>而且为毛线我们要给 <code>self.title</code> 赋值为<code>title</code> !<br>其实是这样的:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentViewTitleItem</span></span></div><div class="line"></div><div class="line">……</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setTitle:(<span class="built_in">NSString</span> *)title &#123;</div><div class="line">    _title = title;</div><div class="line">    <span class="keyword">self</span>.titleLabel.text = title;</div><div class="line">    [<span class="keyword">self</span> setNeedsLayout];</div><div class="line">&#125;</div><div class="line"></div><div class="line">……</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>我们实现了<code>title</code>属性的<code>setter</code>方法，在里面给实例变量<code>_title</code>赋值用来保存值，然后我们给<code>self.titleLabel.text</code>赋值为<code>title</code>, 最后希望它从新布局，因为可能会改变宽度啊。</p>
+<p>那么<code>titleLabel</code>在哪初始化？</p>
+<p>这里我用了懒加载的方法来初始化这个<code>titleLabel</code>：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentViewTitleItem</span></span></div><div class="line"></div><div class="line">………</div><div class="line"></div><div class="line">- (<span class="built_in">UILabel</span> *)titleLabel &#123;</div><div class="line">    <span class="keyword">if</span> (!_titleLabel) &#123;</div><div class="line">        _titleLabel = [[<span class="built_in">UILabel</span> alloc] initWithFrame:<span class="keyword">self</span>.bounds];</div><div class="line">        _titleLabel.textColor = _defaultTitleColor_Normal;</div><div class="line">        _titleLabel.font = _defaultFont;</div><div class="line">        _titleLabel.textAlignment = <span class="built_in">NSTextAlignmentCenter</span>;</div><div class="line">        [<span class="keyword">self</span> addSubview:_titleLabel];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> _titleLabel;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>包括了初始化、颜色、字体、居中、添加为self的子视图等。。</p>
+<blockquote>
+<p><strong>！小贴士：</strong></p>
+<hr>
+<p>Objective-C中的懒加载的写法是重写某一个属性的getter。因为有些情况下我们并不能够确定什么时候初始化一个数组或者字典。多数用在网络请求之后保存结果等。。万一这个数组或者字典你用不到呢？给它个内存空间多浪费呀。所以什么时候用什么时候初始化。<br>注意！在getter中不要用<code>self.titleLabel</code>！会产生递归的。。。因为<code>self.titleLabel</code>实际上就是<code>[self titleLabel]</code>或<code>[self setTitleLabel:_]</code>~<br>懒加载节省了系统响应时间，提升了系统性能，非常具有利用价值。( 虽然在本项目中没什么体现。。以后有机会详细讲解喽 )</p>
+<hr>
+</blockquote>
+<p>这样，一旦调用初始化方法，就完成了label的赋值操作等。接下来我们还需要布局：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">……</div><div class="line"><span class="meta">#define _MinWidth  32</span></div><div class="line"><span class="meta">#define _MaxWidth  YCMainScreenWidth / 2</span></div><div class="line">……</div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentViewTitleItem</span></span></div><div class="line"></div><div class="line">……</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)layoutSubviews &#123;</div><div class="line">    <span class="built_in">CGFloat</span> buttonWidth = [<span class="keyword">self</span> calcuWidth];</div><div class="line">    <span class="keyword">self</span>.frame = <span class="built_in">CGRectMake</span>(<span class="keyword">self</span>.x, <span class="keyword">self</span>.y, buttonWidth + <span class="keyword">self</span>.space, <span class="keyword">self</span>.height);</div><div class="line">    <span class="keyword">self</span>.titleLabel.frame = <span class="built_in">CGRectMake</span>(<span class="keyword">self</span>.space / <span class="number">2</span>, <span class="number">0</span>, buttonWidth, <span class="keyword">self</span>.height);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//在没有title为空的时候，返回最小宽度，不然就没有宽度了</span></div><div class="line">- (<span class="built_in">CGFloat</span>)calcuWidth &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.title == <span class="literal">nil</span>) &#123;</div><div class="line"><span class="comment">///大家想一想，在初始化的时候我没有判断`title`是否为`nil`</span></div><div class="line"><span class="comment">///这样依然会初始化`titleLabel`</span></div><div class="line"><span class="comment">///我该怎么做来避免无用的初始化？</span></div><div class="line">        <span class="keyword">return</span> _MinWidth;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">UIFont</span> *font = <span class="keyword">self</span>.font == <span class="literal">nil</span> ? _defaultFont : <span class="keyword">self</span>.font;</div><div class="line">    <span class="built_in">CGRect</span> frame = [<span class="keyword">self</span>.title boundingRectWithSize:<span class="built_in">CGSizeMake</span>(_MaxWidth, <span class="keyword">self</span>.height) options:(<span class="built_in">NSStringDrawingUsesLineFragmentOrigin</span>) attributes:@&#123;<span class="built_in">NSFontAttributeName</span>: font&#125; context:<span class="literal">nil</span>];</div><div class="line">    <span class="built_in">CGFloat</span> width = frame.size.width;</div><div class="line">    <span class="keyword">return</span> width &gt; _MinWidth ? width : _MinWidth;</div><div class="line">&#125;</div><div class="line">……</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>然后我们希望在外界可以知道他应该具有的宽度，而且想要方便调用：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YCSegmentViewTitleItem</span> : <span class="title">UIView</span></span></div><div class="line"></div><div class="line">……</div><div class="line"></div><div class="line">+ (<span class="built_in">CGFloat</span>)calcuWidth:(<span class="built_in">NSString</span> *)title;</div><div class="line"></div><div class="line">……</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentViewTitleItem</span></span></div><div class="line"></div><div class="line">……</div><div class="line"></div><div class="line">+ (<span class="built_in">CGFloat</span>)calcuWidth:(<span class="built_in">NSString</span> *)title &#123;</div><div class="line">    YCSegmentViewTitleItem *item = [[YCSegmentViewTitleItem alloc] initWithFrame:(<span class="built_in">CGRectZero</span>) title:title];</div><div class="line">    <span class="keyword">return</span> [item calcuWidth] + item.space;</div><div class="line">&#125;</div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>然后希望它被选中时候改变个颜色</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YCSegmentViewTitleItem</span> : <span class="title">UIView</span></span></div><div class="line">……</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">assign</span>) <span class="built_in">BOOL</span>  highlight;</div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentViewTitleItem</span></span></div><div class="line">……</div><div class="line">- (<span class="keyword">void</span>)setHighlight:(<span class="built_in">BOOL</span>)highlight &#123;</div><div class="line">    _highlight = highlight;</div><div class="line">    <span class="keyword">self</span>.titleLabel.textColor = highlight == <span class="literal">YES</span> ? _hasHighlightColor == <span class="literal">YES</span> ? <span class="keyword">self</span>.highlightColor : _defaultTitleColor_Highlight : _hasNormalColor == <span class="literal">YES</span> ? <span class="keyword">self</span>.normalColor : _defaultTitleColor_Normal;</div><div class="line">&#125;</div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>然后我们还需要他能够触发点击事件：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YCSegmentViewTitleItem</span> : <span class="title">UIView</span></span></div><div class="line">……</div><div class="line">- (<span class="keyword">void</span>)addTarget:(<span class="keyword">id</span>)target action:(SEL)action;</div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YCSegmentViewTitleItem</span> ()</span></div><div class="line">&#123;</div><div class="line">    ……</div><div class="line">    <span class="keyword">id</span>   _target;</div><div class="line">    SEL  _action;</div><div class="line">&#125;</div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentViewTitleItem</span></span></div><div class="line">……</div><div class="line">- (<span class="keyword">void</span>)addTarget:(<span class="keyword">id</span>)target action:(SEL)action &#123;</div><div class="line">    _target = target;</div><div class="line">    _action = action;</div><div class="line">&#125;</div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>好了，我们已经保存了<code>target</code>和<code>action</code>，但是什么时候触发？！<br>我们希望点击内部并在内部抬起的时候让<code>target</code>去执行<code>action</code>，所以我们需要一个实例变量来记录是不是在内部点击……</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YCSegmentViewTitleItem</span> ()</span></div><div class="line">&#123;</div><div class="line">    ……</div><div class="line">    <span class="built_in">BOOL</span> _touchedFlag;</div><div class="line">&#125;</div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentViewTitleItem</span></span></div><div class="line">……</div><div class="line">- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="built_in">UIEvent</span> *)event &#123;</div><div class="line">    <span class="built_in">UITouch</span> *touch = touches.anyObject;<span class="comment">///获取一个点击</span></div><div class="line">    <span class="built_in">CGPoint</span> touchPoint = [touch locationInView:<span class="keyword">self</span>];<span class="comment">///获取这个点击在哪个位置</span></div><div class="line">    <span class="keyword">if</span> (touchPoint.x &gt;= <span class="number">0</span> &amp;&amp; touchPoint.x &lt;= <span class="keyword">self</span>.width &amp;&amp; touchPoint.y &gt;= <span class="number">0</span> &amp;&amp; touchPoint.y &lt;= <span class="keyword">self</span>.height) &#123;</div><div class="line">        [<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.1</span> animations:^&#123;</div><div class="line">            <span class="keyword">self</span>.alpha = <span class="number">0.2</span>;</div><div class="line">            <span class="comment">//在里面点击的就是yes喽</span></div><div class="line">            <span class="comment">//而且改变一下透明度告诉用户：你点着我啦！</span></div><div class="line">            _touchedFlag = <span class="literal">YES</span>;</div><div class="line">        &#125;];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)touchesEnded:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(<span class="built_in">UIEvent</span> *)event &#123;</div><div class="line">    <span class="built_in">UITouch</span> *touch = touches.anyObject;</div><div class="line">    <span class="built_in">CGPoint</span> touchPoint = [touch locationInView:<span class="keyword">self</span>];</div><div class="line">    <span class="keyword">if</span> (touchPoint.x &gt;= <span class="number">0</span> &amp;&amp; touchPoint.x &lt;= <span class="keyword">self</span>.width &amp;&amp; touchPoint.y &gt;= <span class="number">0</span> &amp;&amp; touchPoint.y &lt;= <span class="keyword">self</span>.height) &#123;</div><div class="line">        <span class="keyword">if</span> (_touchedFlag) &#123;</div><div class="line">          <span class="comment">//在里面抬起来而且标记还是YES，那么肯定是在里面点击在里面抬起啦。</span></div><div class="line">            [_target performSelector:_action withObject:<span class="keyword">self</span>];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//恢复标记</span></div><div class="line">     _touchedFlag = <span class="literal">NO</span>;</div><div class="line">    <span class="comment">//恢复透明度</span></div><div class="line">    [<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.1</span> animations:^&#123;</div><div class="line">        <span class="keyword">self</span>.alpha = <span class="number">1</span>;</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>这样子主要接口实现就ok了~（半个UIButton的感觉有没有！但是UIButton并不是怎么写的）</p>
+<hr>
+<p>####接下来是itemContent:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1644195-ff2c59e452502aca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片大小：45KB"><br><img src="http://upload-images.jianshu.io/upload_images/1644195-8f6d8eaa3a71d2dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片大小：27KB"></p>
+<p>这个itemContent实际上我命名为：YCSegmentItemsContentView。<br>它是承载item的容器，并且来布局item。<br>它来负责控制高亮哪一个item，或者传递出点击了哪个一个item的消息。</p>
+<p>首先我们先自定义初始化方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YCSegmentItemsContentView</span> : <span class="title">UIView</span></span></div><div class="line">……</div><div class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame titles:(<span class="built_in">NSArray</span> &lt;<span class="built_in">NSString</span> *&gt;*)titles;</div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>我们希望告诉它它应该显示在什么位置，并且显示多少个标题。剩下的让他自己去解决。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YCSegmentItemsContentView</span> ()</span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">CGFloat</span> _buttonWidthSUM;</div><div class="line">    YCSegmentViewTitleItem *_currentItem;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">UIView</span> *buttonContentView;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">UIView</span> *line;</div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">NSMutableArray</span> *buttonsArray;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">NSMutableArray</span> *buttonWidths;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">NSArray</span> *items;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentItemsContentView</span></span></div><div class="line">……</div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame titles:(<span class="built_in">NSArray</span>&lt;<span class="built_in">NSString</span> *&gt; *)titles &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame]) &#123;</div><div class="line">        <span class="keyword">self</span>.items = [titles <span class="keyword">copy</span>];</div><div class="line">        [<span class="keyword">self</span> setupAllButtons];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setupAllButtons &#123;</div><div class="line">    <span class="keyword">self</span>.backgroundColor    = [<span class="built_in">UIColor</span> groupTableViewBackgroundColor];</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.buttonContentView = [[<span class="built_in">UIView</span> alloc] initWithFrame:<span class="built_in">CGRectZero</span>];</div><div class="line">    <span class="keyword">self</span>.buttonContentView.backgroundColor = [<span class="built_in">UIColor</span> whiteColor];</div><div class="line">    [<span class="keyword">self</span> addSubview:<span class="keyword">self</span>.buttonContentView];</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.line = [[<span class="built_in">UIView</span> alloc] initWithFrame:<span class="built_in">CGRectZero</span>];</div><div class="line">    <span class="keyword">self</span>.line.backgroundColor = [<span class="built_in">UIColor</span> orangeColor];</div><div class="line">    [<span class="keyword">self</span> addSubview:<span class="keyword">self</span>.line];</div><div class="line"></div><div class="line">    <span class="comment">///遍历所有的标题，（我这里`self.items`明明有歧义。。）</span></div><div class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *title <span class="keyword">in</span> <span class="keyword">self</span>.items) &#123;</div><div class="line">        <span class="comment">///初始化一个`item`</span></div><div class="line">        YCSegmentViewTitleItem *item = [[YCSegmentViewTitleItem alloc] initWithFrame:(<span class="built_in">CGRectZero</span>) title:title];</div><div class="line">        [item addTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(buttonAction:)];<span class="comment">//添加点击事件</span></div><div class="line">        [<span class="keyword">self</span>.buttonsArray addObject:item];<span class="comment">//添加到数组中</span></div><div class="line">        [<span class="keyword">self</span>.buttonContentView addSubview:item];</div><div class="line"></div><div class="line">        <span class="comment">///计算`item`的宽度</span></div><div class="line">        <span class="built_in">CGFloat</span> width = [YCSegmentViewTitleItem calcuWidth:title];</div><div class="line">        <span class="comment">///保存宽度以备布局（NSArray只能保存对象类型）</span></div><div class="line">        [<span class="keyword">self</span>.buttonWidths addObject:[<span class="built_in">NSNumber</span> numberWithDouble:width]];</div><div class="line">        <span class="comment">///计算所有item的宽度和</span></div><div class="line">        _buttonWidthSUM += width;</div><div class="line">        <span class="keyword">if</span> (_currentItem == <span class="literal">nil</span>) &#123;</div><div class="line">            <span class="comment">/// 默认高亮第一个item，当`_currentItem`第一次赋值之后就跳过</span></div><div class="line">            _currentItem = item;</div><div class="line">            item.highlight = <span class="literal">YES</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">……</div><div class="line"><span class="comment">///懒加载又出现了</span></div><div class="line">- (<span class="built_in">NSMutableArray</span> *)buttonsArray&#123;</div><div class="line">    <span class="keyword">if</span> (!_buttonsArray) &#123;</div><div class="line">        _buttonsArray = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> _buttonsArray;</div><div class="line">&#125;</div><div class="line">- (<span class="built_in">NSMutableArray</span> *)buttonWidths&#123;</div><div class="line">    <span class="keyword">if</span> (!_buttonWidths) &#123;</div><div class="line">        _buttonWidths = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> _buttonWidths;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>保存所有<code>item</code>的宽度和宽度和是为了我们希望<code>item</code>的宽度跟随内容，并且<code>item</code>之间的距离是等宽的。（item有space属性，是不是没有用到？- - 确实没啥子用哈~）</p>
+<p>接下来是布局</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentItemsContentView</span></span></div><div class="line">……</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)layoutSubviews &#123;</div><div class="line"></div><div class="line">    <span class="built_in">CGFloat</span> height = <span class="keyword">self</span>.bounds.size.height;</div><div class="line">    <span class="built_in">CGFloat</span> width  = <span class="keyword">self</span>.bounds.size.width;</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.buttonContentView.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, width, height - <span class="number">2</span>);</div><div class="line"></div><div class="line">    <span class="built_in">CGFloat</span> spacing = <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span> (_buttonWidthSUM &gt;= width) &#123;</div><div class="line">        spacing = <span class="number">0</span>;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        spacing = (width - _buttonWidthSUM) / (_buttonWidths.count + <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; <span class="keyword">self</span>.buttonsArray.count; x++) &#123;</div><div class="line">        YCSegmentViewTitleItem *item = <span class="keyword">self</span>.buttonsArray[x];</div><div class="line">        <span class="built_in">CGFloat</span> buttonWidth = [<span class="keyword">self</span>.buttonWidths[x] doubleValue];</div><div class="line">        <span class="keyword">if</span> (x == <span class="number">0</span>) &#123;</div><div class="line">            第一个`item`不考虑上一个`item`（因为没有嘛。。）</div><div class="line">            item.frame = <span class="built_in">CGRectMake</span>(spacing, <span class="number">0</span>, buttonWidth, _buttonContentView.bounds.size.height);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            每一个`item`的布局依照上一个`item`</div><div class="line">            YCSegmentViewTitleItem *lastItem = <span class="keyword">self</span>.buttonsArray[x - <span class="number">1</span>];</div><div class="line">            item.frame = <span class="built_in">CGRectMake</span>(spacing + lastItem.frame.origin.x + lastItem.frame.size.width, <span class="number">0</span>, buttonWidth, _buttonContentView.bounds.size.height);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">self</span>.line.frame = <span class="built_in">CGRectMake</span>(_currentItem.frame.origin.x, <span class="keyword">self</span>.buttonContentView.bounds.size.height, _currentItem.bounds.size.width, <span class="number">2</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>布局完成了。。接下来呢我们想要通过外接知道当前应该选中哪一个<code>item</code>，并且也希望告诉外接主动选择了哪一个<code>item</code>，怎么告诉？！用代理或者block都可以。在这里我们选择代理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@protocol YCSegmentItemsContentViewDelegate;</div><div class="line"></div><div class="line">@interface YCSegmentItemsContentView : UIView</div><div class="line">……</div><div class="line">@property (nonatomic,assign) id&lt;YCSegmentItemsContentViewDelegate&gt; delegate;</div><div class="line">@property (nonatomic,assign) NSInteger page;</div><div class="line"></div><div class="line">……</div><div class="line">@end</div><div class="line"></div><div class="line">@protocol YCSegmentItemsContentViewDelegate &lt;NSObject&gt;</div><div class="line"></div><div class="line">- (void)didSelectedButtonAtIndex:(NSInteger)index;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentItemsContentView</span></span></div><div class="line">……</div><div class="line"><span class="comment">///这是每一个item的点击事件</span></div><div class="line">- (<span class="keyword">void</span>)buttonAction:(YCSegmentViewTitleItem *)sender &#123;</div><div class="line">    <span class="built_in">NSInteger</span> index = [<span class="keyword">self</span>.buttonsArray indexOfObject:sender];</div><div class="line">    [<span class="keyword">self</span> setPage:index];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.delegate &amp;&amp; [<span class="keyword">self</span>.delegate respondsToSelector:<span class="keyword">@selector</span>(didSelectedButtonAtIndex:)]) &#123;</div><div class="line">        [<span class="keyword">self</span>.delegate didSelectedButtonAtIndex:index];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setPage:(<span class="built_in">NSInteger</span>)page &#123;</div><div class="line">    <span class="keyword">if</span> (_page == page) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    _page = page;</div><div class="line">    [<span class="keyword">self</span> moveToPage:page];</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)moveToPage:(<span class="built_in">NSInteger</span>)page &#123;</div><div class="line">    <span class="keyword">if</span> (page &gt; <span class="keyword">self</span>.buttonsArray.count) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    YCSegmentViewTitleItem *item = <span class="keyword">self</span>.buttonsArray[page];</div><div class="line">    _currentItem.highlight = <span class="literal">NO</span>;</div><div class="line">    _currentItem = item;</div><div class="line">    item.highlight = <span class="literal">YES</span>;</div><div class="line">    [<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.2</span> animations:^&#123;</div><div class="line">        <span class="built_in">CGRect</span> buttonFrame = item.frame;</div><div class="line">        <span class="built_in">CGRect</span> lineFrame = <span class="keyword">self</span>.line.frame;</div><div class="line">        lineFrame.origin.x = buttonFrame.origin.x;</div><div class="line">        lineFrame.size.width = buttonFrame.size.width;</div><div class="line">        <span class="keyword">self</span>.line.frame = lineFrame;</div><div class="line">    &#125; completion:^(<span class="built_in">BOOL</span> finished) &#123;</div><div class="line">        <span class="keyword">if</span> (finished) &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>外界设置代理之后，就可以让代理去执行我们想要让他执行的协议方法，但在这之前，需要确定代理是否存在，代理有没有实现协议方法。否则会崩溃哦。</p>
+<p>好了，现在这个控件也可以实现和其他控件的交互了。</p>
+<hr>
+<p>####接下来是segmentView</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1644195-c7d89acb29388dc9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片大小：110KB"></p>
+<p>这个黑色可部分是collectionView，因为他自由度比较高，简单易用~<br><code>segmentView</code>将<code>item</code>和<code>itemContent</code>结合在一起：</p>
+<p>以下是初始化以及布局：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///接口部分：</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YCSegmentView</span> : <span class="title">UIView</span></span></div><div class="line"></div><div class="line"><span class="comment">///非选中颜色</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">UIColor</span> *normalColor;</div><div class="line"><span class="comment">///选中颜色</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">UIColor</span> *highlightColor;</div><div class="line"><span class="comment">///字体</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">UIFont</span>  *font;</div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame titleHeight:(<span class="built_in">CGFloat</span>)height viewControllers:(<span class="built_in">NSArray</span> &lt;<span class="built_in">UIViewController</span> *&gt; *)viewControllers;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentView</span></span></div><div class="line">……</div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame titleHeight:(<span class="built_in">CGFloat</span>)height viewControllers:(<span class="built_in">NSArray</span>&lt;<span class="built_in">UIViewController</span> *&gt; *)viewControllers &#123;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame]) &#123;</div><div class="line">        _titleHeight = height;</div><div class="line">        _viewControllers = viewControllers;</div><div class="line">        [<span class="keyword">self</span> setupAllViews];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">因为我们想让用户更加方便使用，</div><div class="line">所以希望用户只需要传入视图控制器，</div><div class="line">就可以完成控件的初始化，</div><div class="line">控制器有`title`属性。</div><div class="line">我们就可以直接取到控制器的标题来初始化`itemContent`</div><div class="line">*/</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setupAllViews &#123;</div><div class="line">    <span class="built_in">NSMutableArray</span> *titles = [<span class="built_in">NSMutableArray</span> arrayWithCapacity:_viewControllers.count];</div><div class="line">    <span class="keyword">for</span> (<span class="built_in">UIViewController</span> *vc <span class="keyword">in</span> _viewControllers) &#123;</div><div class="line">        [titles addObject:vc.title];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.titleView = [[YCSegmentItemsContentView alloc] initWithFrame:<span class="built_in">CGRectZero</span> titles:titles];</div><div class="line">    <span class="keyword">self</span>.titleView.delegate = <span class="keyword">self</span>;</div><div class="line">    [<span class="keyword">self</span> addSubview:<span class="keyword">self</span>.titleView];</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.cLayout = [[<span class="built_in">UICollectionViewFlowLayout</span> alloc] init];</div><div class="line"></div><div class="line"><span class="comment">///设置collectionView的滚动方式为水平滚动</span></div><div class="line">    <span class="keyword">self</span>.cLayout.scrollDirection = <span class="built_in">UICollectionViewScrollDirectionHorizontal</span>;</div><div class="line">    <span class="keyword">self</span>.collectionView = [[<span class="built_in">UICollectionView</span> alloc] initWithFrame:(<span class="built_in">CGRectZero</span>) collectionViewLayout:<span class="keyword">self</span>.cLayout];</div><div class="line"></div><div class="line"><span class="comment">///这是collectionView按页滚动</span></div><div class="line">    <span class="keyword">self</span>.collectionView.pagingEnabled = <span class="literal">YES</span>;</div><div class="line">    <span class="keyword">self</span>.collectionView.delegate = <span class="keyword">self</span>;</div><div class="line">    <span class="keyword">self</span>.collectionView.dataSource = <span class="keyword">self</span>;</div><div class="line"></div><div class="line"><span class="comment">///注意！这里为`collectionView`注册`cell` (YCSegmentViewUnit)，下文提到。</span></div><div class="line">    [<span class="keyword">self</span>.collectionView registerClass:[YCSegmentViewUnit <span class="keyword">class</span>] forCellWithReuseIdentifier:<span class="string">@"YCSegmentViewUnit"</span>];</div><div class="line"></div><div class="line"><span class="comment">///注意！这里为`collectionView`添加观察者，观察属性`contentOffset`的变化，来获得页数，控制`itemContent`选择哪一个`item`</span></div><div class="line">    [<span class="keyword">self</span>.collectionView addObserver:<span class="keyword">self</span> forKeyPath:<span class="string">@"contentOffset"</span> options:(<span class="built_in">NSKeyValueObservingOptionNew</span>) context:<span class="literal">nil</span>];</div><div class="line">    [<span class="keyword">self</span> addSubview:<span class="keyword">self</span>.collectionView];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)layoutSubviews &#123;</div><div class="line">    <span class="keyword">self</span>.titleView.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">self</span>.frame.size.width, _titleHeight);</div><div class="line">    <span class="keyword">self</span>.collectionView.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, _titleHeight, <span class="keyword">self</span>.frame.size.width, <span class="keyword">self</span>.frame.size.height - _titleHeight);</div><div class="line">&#125;</div><div class="line"></div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>还有重写KVO发现属性变化后会调用的方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">……</div><div class="line">- (<span class="keyword">void</span>)observeValueForKeyPath:(<span class="built_in">NSString</span> *)keyPath ofObject:(<span class="keyword">id</span>)object change:(<span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSString</span> *,<span class="keyword">id</span>&gt; *)change context:(<span class="keyword">void</span> *)context &#123;</div><div class="line"></div><div class="line">    <span class="built_in">CGPoint</span> offset = <span class="keyword">self</span>.collectionView.contentOffset;</div><div class="line"><span class="comment">///这里` + 0.5` 是为了当滚动到页面一半的时候，就已经算作下一页或者上一页</span></div><div class="line">    <span class="built_in">CGFloat</span> pageFloat = offset.x / <span class="keyword">self</span>.collectionView.bounds.size.width + <span class="number">0.5</span>;</div><div class="line">    <span class="keyword">if</span> (pageFloat &lt; <span class="number">0</span>) &#123;</div><div class="line">        pageFloat = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (pageFloat &gt; _viewControllers.count) &#123;</div><div class="line">        pageFloat = _viewControllers.count;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">NSInteger</span> page = (<span class="built_in">NSInteger</span>)pageFloat;</div><div class="line">    <span class="keyword">self</span>.titleView.page = page;</div><div class="line">&#125;</div><div class="line">……</div></pre></td></tr></table></figure>
+<p>在类的延展中有这样一些属性和变量：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YCSegmentView</span> ()&lt;<span class="title">UICollectionViewDelegate</span>, <span class="title">UICollectionViewDataSource</span>, <span class="title">UICollectionViewDelegateFlowLayout</span>, <span class="title">YCSegmentItemsContentViewDelegate</span>&gt;</span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSArray</span> *_viewControllers;<span class="comment">//用来保存所有的控制器</span></div><div class="line">    <span class="built_in">CGFloat</span>  _titleHeight;<span class="comment">//用来保存`itemContent`的高度</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">UICollectionViewFlowLayout</span> *cLayout;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">UICollectionView</span> *collectionView;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) YCSegmentItemsContentView *titleView;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>剩下的就是实现<code>collectionView</code>的协议方法，以及<code>itemContent</code>的协议方法：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- (<span class="built_in">NSInteger</span>)numberOfSectionsInCollectionView:(<span class="built_in">UICollectionView</span> *)collectionView &#123;</div><div class="line">    <span class="keyword">return</span> _viewControllers.count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">NSInteger</span>)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView numberOfItemsInSection:(<span class="built_in">NSInteger</span>)section &#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">UICollectionViewCell</span> *)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView cellForItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</div><div class="line">    YCSegmentViewUnit * cell = [collectionView dequeueReusableCellWithReuseIdentifier:<span class="string">@"YCSegmentViewUnit"</span> forIndexPath:indexPath];</div><div class="line">    <span class="built_in">UIViewController</span> *vc = _viewControllers[indexPath.section];</div><div class="line">    <span class="keyword">if</span> (!vc.isViewLoaded) &#123;</div><div class="line">        [vc loadViewIfNeeded];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    cell.view = vc.view;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> cell;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">CGSize</span>)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView layout:(<span class="built_in">UICollectionViewLayout</span> *)collectionViewLayout sizeForItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</div><div class="line">    <span class="keyword">return</span> collectionView.bounds.size;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)didSelectedButtonAtIndex:(<span class="built_in">NSInteger</span>)index &#123;</div><div class="line">    <span class="built_in">CGFloat</span> width = <span class="keyword">self</span>.collectionView.bounds.size.width;</div><div class="line">    [<span class="keyword">self</span>.collectionView setContentOffset:(<span class="built_in">CGPointMake</span>(width * index, <span class="number">0</span>)) animated:<span class="literal">YES</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接下来我们看一下<code>YCSegmentViewUnit</code>类的代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YCSegmentViewUnit</span> : <span class="title">UICollectionViewCell</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">UIView</span> *view;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentViewUnit</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setView:(<span class="built_in">UIView</span> *)view &#123;</div><div class="line">    <span class="keyword">if</span> (_view) &#123;</div><div class="line">        [_view removeFromSuperview];</div><div class="line">    &#125;</div><div class="line">    [<span class="keyword">self</span>.contentView addSubview:view];</div><div class="line">    [<span class="keyword">self</span> setNeedsLayout];</div><div class="line">    _view = view;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)layoutSubviews &#123;</div><div class="line">    <span class="keyword">self</span>.view.frame = <span class="keyword">self</span>.contentView.bounds;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>当我们为cell的<code>view</code>属性赋值的时候，需要考虑当前的_view是否存在，如果存在就从<code>contentView</code>上移除，然后将新传入的<code>view</code>添加到<code>contentView</code>上，然后设置<code>view</code>的位置和大小贴合<code>contentView</code>。<br>最后千万不要忘了，<code>_view = view</code>，因为我们需要实力变量保存当前的<code>view</code>!</p>
+<p>这样这个控件的封装就搞定啦~</p>
+<p><strong>不！还有非常重要的一点！</strong><br>我们使用了KVO对<code>collectionView</code>进行了属性观察，但是如果观察着被释放了，肯定会出现问题，所以我们需要在<code>YCSegmentView</code>中重写<code>- (void)dealloc</code>方法，在dealloc中移除对collectionView的观察：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)dealloc &#123;</div><div class="line">    [<span class="keyword">self</span>.collectionView removeObserver:<span class="keyword">self</span> forKeyPath:<span class="string">@"contentOffset"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>恩，这样子就大功告成了，我们实例化一个看一看~~</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line"></div><div class="line">    HomeViewController *vc1 = [[HomeViewController alloc] init];</div><div class="line">    vc1.title = <span class="string">@"首页"</span>;</div><div class="line"></div><div class="line">    RankViewController *vc2 = [[RankViewController alloc] init];</div><div class="line">    vc2.title = <span class="string">@"榜单"</span>;</div><div class="line"></div><div class="line">    MasterViewController *vc3 = [[MasterViewController alloc] init];</div><div class="line">    vc3.title = <span class="string">@"达人"</span>;</div><div class="line"></div><div class="line">    ChoicenessViewController *vc4 = [[ChoicenessViewController alloc] init];</div><div class="line">    vc4.title = <span class="string">@"每周精选"</span>;</div><div class="line"></div><div class="line"></div><div class="line">    YCSegmentView *view = [[YCSegmentView alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">20</span>, <span class="keyword">self</span>.view.bounds.size.width, <span class="keyword">self</span>.view.bounds.size.height) titleHeight:<span class="number">44</span> viewControllers:@[vc1, vc2, vc3, vc4]];</div><div class="line">    view.highlightColor = [<span class="built_in">UIColor</span> orangeColor];</div><div class="line">    [<span class="keyword">self</span>.view addSubview:view];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/1644195-b8cddb2b1a283229.gif?imageMogr2/auto-orient/strip" alt="图片大小：225KB"></p>
+<p>没错，就是这个样子~</p>
+<blockquote>
+<p>源码：<a href="https://github.com/ilakeYC/YCSegment" target="_blank" rel="external">https://github.com/ilakeYC/YCSegment</a></p>
+</blockquote>
+<hr>
+<blockquote>
+<p><strong>欢迎大家的评论或反馈</strong><br>iLakeYC 感谢各位的耐心阅读</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/04/15/foo/" data-id="civxvdrzf0000efs6lgy0i8e5" class="article-share-link" data-share="baidu" data-title="手把手教你封装属于自己的分段滚动视图(segmentScrollView)">Share</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/04/15/foo/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SwiftLang/">SwiftLang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2016/04/15/foo/" data-title="手把手教你封装属于自己的分段滚动视图(segmentScrollView)" data-url="http://yoursite.com/2016/04/15/foo/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS-Development/">iOS Development</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SwiftLang/">SwiftLang</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/SwiftLang/" style="font-size: 10px;">SwiftLang</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/04/15/foo/">手把手教你封装属于自己的分段滚动视图(segmentScrollView)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://arvinxiang.com" target="_blank">主题作者</a>
+          </li>
+        
+          <li>
+            <a href="http://reqianduan.com" target="_blank">热前端</a>
+          </li>
+        
+          <li>
+            <a href="http://yuancheng.work" target="_blank">远程.work</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Lalo<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"reqianduan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
