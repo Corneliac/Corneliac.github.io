@@ -25,8 +25,6 @@
 <meta name="twitter:description" content="大家好，今天我来教大家封装一个滚动视图，额，其实我也不确定它应该叫什么名字，所以我就起名字为YCSegment了。看下图大家应该就能明白是神马。。(还望各位高手指出不足)">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1644195-b8cddb2b1a283229.gif?imageMogr2/auto-orient/strip">
   
-    <link rel="alternative" href="/atom.xml" title="Lalo" type="application/atom+xml">
-  
   
     <link rel="icon" href="/favicon.png">
   
@@ -56,12 +54,8 @@
         
           <a class="main-nav-link" href="/">Home</a>
         
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
       </nav>
       <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
@@ -169,7 +163,7 @@
 <p>接下来是布局</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentItemsContentView</span></span></div><div class="line">……</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)layoutSubviews &#123;</div><div class="line"></div><div class="line">    <span class="built_in">CGFloat</span> height = <span class="keyword">self</span>.bounds.size.height;</div><div class="line">    <span class="built_in">CGFloat</span> width  = <span class="keyword">self</span>.bounds.size.width;</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.buttonContentView.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, width, height - <span class="number">2</span>);</div><div class="line"></div><div class="line">    <span class="built_in">CGFloat</span> spacing = <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span> (_buttonWidthSUM &gt;= width) &#123;</div><div class="line">        spacing = <span class="number">0</span>;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        spacing = (width - _buttonWidthSUM) / (_buttonWidths.count + <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; <span class="keyword">self</span>.buttonsArray.count; x++) &#123;</div><div class="line">        YCSegmentViewTitleItem *item = <span class="keyword">self</span>.buttonsArray[x];</div><div class="line">        <span class="built_in">CGFloat</span> buttonWidth = [<span class="keyword">self</span>.buttonWidths[x] doubleValue];</div><div class="line">        <span class="keyword">if</span> (x == <span class="number">0</span>) &#123;</div><div class="line">            第一个`item`不考虑上一个`item`（因为没有嘛。。）</div><div class="line">            item.frame = <span class="built_in">CGRectMake</span>(spacing, <span class="number">0</span>, buttonWidth, _buttonContentView.bounds.size.height);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            每一个`item`的布局依照上一个`item`</div><div class="line">            YCSegmentViewTitleItem *lastItem = <span class="keyword">self</span>.buttonsArray[x - <span class="number">1</span>];</div><div class="line">            item.frame = <span class="built_in">CGRectMake</span>(spacing + lastItem.frame.origin.x + lastItem.frame.size.width, <span class="number">0</span>, buttonWidth, _buttonContentView.bounds.size.height);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">self</span>.line.frame = <span class="built_in">CGRectMake</span>(_currentItem.frame.origin.x, <span class="keyword">self</span>.buttonContentView.bounds.size.height, _currentItem.bounds.size.width, <span class="number">2</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <p>布局完成了。。接下来呢我们想要通过外接知道当前应该选中哪一个<code>item</code>，并且也希望告诉外接主动选择了哪一个<code>item</code>，怎么告诉？！用代理或者block都可以。在这里我们选择代理：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@protocol YCSegmentItemsContentViewDelegate;</div><div class="line"></div><div class="line">@interface YCSegmentItemsContentView : UIView</div><div class="line">……</div><div class="line">@property (nonatomic,assign) id&lt;YCSegmentItemsContentViewDelegate&gt; delegate;</div><div class="line">@property (nonatomic,assign) NSInteger page;</div><div class="line"></div><div class="line">……</div><div class="line">@end</div><div class="line"></div><div class="line">@protocol YCSegmentItemsContentViewDelegate &lt;NSObject&gt;</div><div class="line"></div><div class="line">- (void)didSelectedButtonAtIndex:(NSInteger)index;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@protocol</span> YCSegmentItemsContentViewDelegate;</div><div class="line"></div><div class="line"><span class="variable">@interface</span> <span class="attribute">YCSegmentItemsContentView </span>: UIView</div><div class="line">……</div><div class="line"><span class="variable">@property</span> (nonatomic,assign) id&lt;YCSegmentItemsContentViewDelegate&gt; delegate;</div><div class="line"><span class="variable">@property</span> (nonatomic,assign) NSInteger page;</div><div class="line"></div><div class="line">……</div><div class="line"><span class="variable">@end</span></div><div class="line"></div><div class="line"><span class="variable">@protocol</span> YCSegmentItemsContentViewDelegate &lt;NSObject&gt;</div><div class="line"></div><div class="line">- (void)<span class="attribute">didSelectedButtonAtIndex</span>:(NSInteger)index;</div><div class="line"></div><div class="line"><span class="variable">@end</span></div></pre></td></tr></table></figure>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">YCSegmentItemsContentView</span></span></div><div class="line">……</div><div class="line"><span class="comment">///这是每一个item的点击事件</span></div><div class="line">- (<span class="keyword">void</span>)buttonAction:(YCSegmentViewTitleItem *)sender &#123;</div><div class="line">    <span class="built_in">NSInteger</span> index = [<span class="keyword">self</span>.buttonsArray indexOfObject:sender];</div><div class="line">    [<span class="keyword">self</span> setPage:index];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.delegate &amp;&amp; [<span class="keyword">self</span>.delegate respondsToSelector:<span class="keyword">@selector</span>(didSelectedButtonAtIndex:)]) &#123;</div><div class="line">        [<span class="keyword">self</span>.delegate didSelectedButtonAtIndex:index];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setPage:(<span class="built_in">NSInteger</span>)page &#123;</div><div class="line">    <span class="keyword">if</span> (_page == page) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    _page = page;</div><div class="line">    [<span class="keyword">self</span> moveToPage:page];</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)moveToPage:(<span class="built_in">NSInteger</span>)page &#123;</div><div class="line">    <span class="keyword">if</span> (page &gt; <span class="keyword">self</span>.buttonsArray.count) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    YCSegmentViewTitleItem *item = <span class="keyword">self</span>.buttonsArray[page];</div><div class="line">    _currentItem.highlight = <span class="literal">NO</span>;</div><div class="line">    _currentItem = item;</div><div class="line">    item.highlight = <span class="literal">YES</span>;</div><div class="line">    [<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.2</span> animations:^&#123;</div><div class="line">        <span class="built_in">CGRect</span> buttonFrame = item.frame;</div><div class="line">        <span class="built_in">CGRect</span> lineFrame = <span class="keyword">self</span>.line.frame;</div><div class="line">        lineFrame.origin.x = buttonFrame.origin.x;</div><div class="line">        lineFrame.size.width = buttonFrame.size.width;</div><div class="line">        <span class="keyword">self</span>.line.frame = lineFrame;</div><div class="line">    &#125; completion:^(<span class="built_in">BOOL</span> finished) &#123;</div><div class="line">        <span class="keyword">if</span> (finished) &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line">……</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
 <p>外界设置代理之后，就可以让代理去执行我们想要让他执行的协议方法，但在这之前，需要确定代理是否存在，代理有没有实现协议方法。否则会崩溃哦。</p>
 <p>好了，现在这个控件也可以实现和其他控件的交互了。</p>
@@ -208,11 +202,9 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/04/15/foo/" data-id="civxvdrzf0000efs6lgy0i8e5" class="article-share-link" data-share="baidu" data-title="手把手教你封装属于自己的分段滚动视图(segmentScrollView)">Share</a>
+        <a data-url="http://yoursite.com/2016/04/15/foo/" data-id="civzch9d10000i3s6olp7i5vz" class="article-share-link">分享到</a>
       
 
-      
-        <a href="http://yoursite.com/2016/04/15/foo/#ds-thread" class="article-comment-link">Comments</a>
       
 
       
@@ -225,17 +217,13 @@
   
 </article>
 
-
-  <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2016/04/15/foo/" data-title="手把手教你封装属于自己的分段滚动视图(segmentScrollView)" data-url="http://yoursite.com/2016/04/15/foo/"></div>
-  </section>
 </section>
       
       <aside id="sidebar">
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">分类</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS-Development/">iOS Development</a><span class="category-list-count">1</span></li></ul>
     </div>
@@ -244,7 +232,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">标签</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SwiftLang/">SwiftLang</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">1</span></li></ul>
     </div>
@@ -253,7 +241,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
       <a href="/tags/SwiftLang/" style="font-size: 10px;">SwiftLang</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a>
     </div>
@@ -262,47 +250,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">归档</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2016/04/15/foo/">手把手教你封装属于自己的分段滚动视图(segmentScrollView)</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Links</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="http://arvinxiang.com" target="_blank">主题作者</a>
-          </li>
-        
-          <li>
-            <a href="http://reqianduan.com" target="_blank">热前端</a>
-          </li>
-        
-          <li>
-            <a href="http://yuancheng.work" target="_blank">远程.work</a>
-          </li>
-        
-      </ul>
     </div>
   </div>
 
@@ -326,56 +276,16 @@
   
     <a href="/" class="mobile-nav-link">Home</a>
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
 </nav>
   <!-- totop start -->
 <div id="totop">
-<a title="totop"><img src="/img/scrollup.png"/></a>
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 </div>
 
 <!-- totop end -->
 
-<!-- 多说公共js代码 start -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"reqianduan"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共js代码 end -->
-
 
 <!-- 百度分享 start -->
-
-<div id="article-share-box" class="article-share-box">
-  <div id="bdshare" class="bdsharebuttonbox article-share-links">
-    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
-    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
-    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
-    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
-    <a class="article-share-more" data-cmd="more" title="更多"></a>
-  </div>
-</div>
-<script>
-  function SetShareData(cmd, config) {
-    if (shareDataTitle && shareDataUrl) {
-      config.bdText = shareDataTitle;
-      config.bdUrl = shareDataUrl;
-    }
-    return config;
-  }
-  window._bd_share_config={
-    "common":{onBeforeClick: SetShareData},
-    "share":{"bdCustomStyle":"/css/bdshare.css"}
-  };
-  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
-</script>
 
 <!-- 百度分享 end -->
 
