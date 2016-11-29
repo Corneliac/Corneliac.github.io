@@ -4,14 +4,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Lalo</title>
+  <title>关于指针 | Lalo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Lalo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="《POINTERS ON C》一书总结指针以下方面:
+
+指针基础
+警告总结
+编程提示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于指针">
+<meta property="og:url" content="http://yoursite.com/2016/11/29/pointer/index.html">
 <meta property="og:site_name" content="Lalo">
+<meta property="og:description" content="《POINTERS ON C》一书总结指针以下方面:
+
+指针基础
+警告总结
+编程提示">
+<meta property="og:updated_time" content="2016-11-29T09:19:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lalo">
+<meta name="twitter:title" content="关于指针">
+<meta name="twitter:description" content="《POINTERS ON C》一书总结指针以下方面:
+
+指针基础
+警告总结
+编程提示">
   
   
     <link rel="icon" href="/favicon.png">
@@ -61,9 +77,7 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main">
-  
-    <article id="post-pointer" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-pointer" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/29/pointer/" class="article-date">
   <time datetime="2016-11-29T08:34:14.000Z" itemprop="datePublished">2016-11-29</time>
@@ -80,8 +94,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/29/pointer/">关于指针</a>
+    <h1 class="article-title" itemprop="name">
+      关于指针
     </h1>
   
 
@@ -98,11 +112,36 @@
 <li>编程提示</li>
 </ul>
 </blockquote>
-        
-          <p class="article-more-link">
-            <a href="/2016/11/29/pointer/#more">Read More</a>
-          </p>
-        
+<a id="more"></a>
+<hr>
+<h3 id="指针基础的总结"><a href="#指针基础的总结" class="headerlink" title="指针基础的总结"></a>指针基础的总结</h3><blockquote>
+<p>计算机内存中的每一个位置都由一个地址标识。通常，邻近的内存位置合成一组，这样就允许存储更大范围的值。指针就是它的值表示内存地址的变量</p>
+<p>无论是程序员还是计算机都无法通过值的位模式来判断它的类型。类型是通过值的使用方法隐式地确定的。编译器能够保证值的声明和值的使用之间的关系是恰当的，从而帮助我们确定值的类型</p>
+<p>指针变量的值并非它所指向的内存位置所存储的值。我们必须使用间接访问来获取它所指向位置存储的值。对一个“指向整型的指针”施加间接访问操作的结果将是一个整型值</p>
+<p>声明一个指针变量并不会自动分配任何内存。在对指针执行间接访问前，指针必须进行初始化或使它指向现有的内存，或者给它分配动态内存。对未初始化的指针变量执行间接访问操作是非法的，而且这种错误通常难以检测。其结果常常是一个不相关的值被修改。之中错误是很难被调试发现的</p>
+<p>NULL指针就是不指向任何东西的指针。它可以赋值给一个指针，用于表示那个指针并不指向任何值。对NULL指针执行间接访问操作的后果因编译器而异，两个常见的后果分别是返回内存位置零的值以及终止程序</p>
+<p>和任何其他变量一样，指针变量也可以作为左值使用。对指针执行间接访问操作所产生的值也是个左值，因为这种表达式标识了一个特定的内存位置</p>
+<p>除了NULL指针之外，再也没有任何内建的记法来表示指针常量，因为程序员通常无法预测编译器会把变量放在内存中的什么位置。在极少见的情况下，我们偶尔需要使用指针常量，这时可以通过把一个整型值强制转换为指针类型来创建它</p>
+<p>在指针值上也可以执行一些有限的算术运算。可以把一个整型值加到一个指针上，也可以从一个指针减去一个整型值。这两种情况下，这个整型值会进行调整，原值将乘以指针目标类型的长度。这样，对一个指针加1将使它指向下一个变量，至于该变量在内存中占几个字节的大小则与此无关</p>
+</blockquote>
+<hr>
+<h3 id="警告的总结"><a href="#警告的总结" class="headerlink" title="警告的总结"></a>警告的总结</h3><blockquote>
+<ul>
+<li>错误地对一个未初始化的指针变量进行解引用</li>
+<li>错误地对一个NULL指针进行解引用</li>
+<li>向函数错误地传递NULL指针</li>
+<li>未检测到指针表达式的错误，从而导致不可预料的结果</li>
+<li>对一个指针进行减法运算，使它非法的指向了数组第1个元素的前面的内存位置</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="编程提示的总结"><a href="#编程提示的总结" class="headerlink" title="编程提示的总结"></a>编程提示的总结</h3><blockquote>
+<ul>
+<li>一个值应该只有一种意思</li>
+<li>如果指针并不指向任何有意义的东西，就把它置为NULL</li>
+</ul>
+</blockquote>
+
       
     </div>
     <footer class="article-footer">
@@ -118,127 +157,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-blockunderlyingparsing" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/27/blockunderlyingparsing/" class="article-date">
-  <time datetime="2016-11-27T11:52:21.000Z" itemprop="datePublished">2016-11-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/iOS-Development/">iOS Development</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/27/blockunderlyingparsing/">block浅析</a>
-    </h1>
+    <a href="/2016/11/27/blockunderlyingparsing/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">block浅析</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<blockquote>
-<p>主要总结了以下几点：</p>
-<ul>
-<li>什么是block</li>
-<li>block的类型</li>
-</ul>
-</blockquote>
-        
-          <p class="article-more-link">
-            <a href="/2016/11/27/blockunderlyingparsing/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2016/11/27/blockunderlyingparsing/" data-id="ciw395f300001defyda6w8uua" class="article-share-link">Share</a>
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/block/">block</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-block" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/27/block/" class="article-date">
-  <time datetime="2016-11-27T08:03:42.000Z" itemprop="datePublished">2016-11-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/iOS-Development/">iOS Development</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/27/block/">使用block的小注意事项</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<blockquote>
-<p>在本文中将会说明：</p>
-<ul>
-<li>使用block造成的循环引用</li>
-<li>block与局部变量问题</li>
-<li>block内部实现</li>
-</ul>
-</blockquote>
-        
-          <p class="article-more-link">
-            <a href="/2016/11/27/block/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2016/11/27/block/" data-id="ciw395f2w0000defyl82nr8r5" class="article-share-link">Share</a>
-      
-
-      
-
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/block/">block</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 </section>
       

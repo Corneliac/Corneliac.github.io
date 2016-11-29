@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>block浅析 | Lalo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="主要总结了以下几点：
+
+什么是block
+block的类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="block浅析">
+<meta property="og:url" content="http://yoursite.com/2016/11/27/blockunderlyingparsing/index.html">
+<meta property="og:site_name" content="Lalo">
+<meta property="og:description" content="主要总结了以下几点：
+
+什么是block
+block的类型">
+<meta property="og:updated_time" content="2016-11-27T15:11:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="block浅析">
+<meta name="twitter:description" content="主要总结了以下几点：
+
+什么是block
+block的类型">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Lalo</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">LIFE IS SIMPLE, LOVE SMILE AND CODE</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="yoursite.com">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-blockunderlyingparsing" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/27/blockunderlyingparsing/" class="article-date">
+  <time datetime="2016-11-27T11:52:21.000Z" itemprop="datePublished">2016-11-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS-Development/">iOS Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      block浅析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<blockquote>
+<p>主要总结了以下几点：</p>
+<ul>
+<li>什么是block</li>
+<li>block的类型</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<hr>
+<h3 id="什么是block？"><a href="#什么是block？" class="headerlink" title="什么是block？"></a>什么是block？</h3><blockquote>
+<p> block 实际上：</p>
+</blockquote>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> Block_descriptor &#123;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> reserved;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> size;</div><div class="line">    <span class="keyword">void</span> (*<span class="keyword">copy</span>)(<span class="keyword">void</span> *dst, <span class="keyword">void</span> *src);</div><div class="line">    <span class="keyword">void</span> (*dispose)(<span class="keyword">void</span> *);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">struct</span> Block_layout &#123;</div><div class="line">    <span class="keyword">void</span> *isa;</div><div class="line">    <span class="keyword">int</span> flags;</div><div class="line">    <span class="keyword">int</span> reserved;</div><div class="line">    <span class="keyword">void</span> (*invoke)(<span class="keyword">void</span> *, ...);</div><div class="line">    <span class="keyword">struct</span> Block_descriptor *descriptor;</div><div class="line">    <span class="comment">/* Imported variables. */</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>invoke，block执行时调用的函数指针，block定义时内部的执行代码都在这个函数中</li>
+<li>Block_descriptor，block的详细描述<ul>
+<li>copy/dispose，辅助拷贝/销毁函数，处理block范围外的变量时使用</li>
+</ul>
+</li>
+</ul>
+<p>总体来说，block就是一个里面存储了指向函数体中包含定义block时的代码块的函数指针，以及block外部上下文变量等信息的结构体</p>
+</blockquote>
+<hr>
+<h3 id="block的类型"><a href="#block的类型" class="headerlink" title="block的类型"></a>block的类型</h3><blockquote>
+<p>三种类型：</p>
+<ul>
+<li>_NSConcreteGlobalBlock  — 全局静态</li>
+<li>_NSConcreteStackBlock — 保存在栈中， 出函数作用域就销毁</li>
+<li>_NSConcreteMallocBlock  — 保存在堆中， retainCount == 0销毁<ul>
+<li>堆中的block无法直接创建， 需要由_NSConcreteStackBlock类型的block拷贝而来(也就是说block需要执行copy之后才能存放到堆中)</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="block修饰的局部变量"><a href="#block修饰的局部变量" class="headerlink" title="__block修饰的局部变量"></a>__block修饰的局部变量</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> Block_byref &#123;</div><div class="line">    <span class="keyword">void</span> *isa;</div><div class="line">    <span class="keyword">struct</span> Block_byref *forwarding;</div><div class="line">    <span class="keyword">int</span> flags; <span class="comment">/* refcount; */</span></div><div class="line">    <span class="keyword">int</span> size;</div><div class="line">    <span class="keyword">void</span> (*byref_keep)(<span class="keyword">struct</span> Block_byref *dst, <span class="keyword">struct</span> Block_byref *src);</div><div class="line">    <span class="keyword">void</span> (*byref_destroy)(<span class="keyword">struct</span> Block_byref *);</div><div class="line">    <span class="comment">/* long shared[0]; */</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这个结构体中含有isa指针，所以也是一个对象，它是用来包装局部变量的</p>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><blockquote>
+<ul>
+<li><p>block对象就是一个结构体，里面有isa指针指向自己的类（global malloc stack），有desc结构体描述block的信息，<strong>forwarding指向自己或堆上自己的地址，如果block对象截获变量，这些变量也会出现在block结构体中。最重要的block结构体有一个函数指针，指向block代码块。block结构体的构造函数的参数，包括函数指针，描述block的结构体，自动截获的变量（全局变量不用截获），引用到的</strong>block变量。(__block对象也会转变成结构体)</p>
+</li>
+<li><p>block代码块在编译的时候会生成一个函数，函数第一个参数是前面说到的block对象结构体指针。执行block，相当于执行block里面__forwarding里面的函数指针。</p>
+</li>
+<li><p>总体来说，block就是一个里面存储了指向函数体中包含定义block时的代码块的函数指针，以及block外部上下文变量等信息的结构体</p>
+</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/11/27/blockunderlyingparsing/" data-id="ciw395f300001defyda6w8uua" class="article-share-link">Share</a>
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/block/">block</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/29/pointer/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          关于指针
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/27/block/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">使用block的小注意事项</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-Development/">C Development</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS-Development/">iOS Development</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/block/">block</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pointer/">pointer</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/block/" style="font-size: 20px;">block</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/pointer/" style="font-size: 10px;">pointer</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Lalo<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
