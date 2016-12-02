@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>UIViewAnimation基础 | Lalo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="设置UIView的属性:
+
+Position 位置
+Opacity 透明度
+Scale 比例
+Color 颜色
+
+
+设置变化:
+
+Rotation 旋转
+Repeat 重复
+Easing  曲线
+spring  弹簧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UIViewAnimation基础">
+<meta property="og:url" content="http://yoursite.com/2016/12/01/uiviewanimation/index.html">
+<meta property="og:site_name" content="Lalo">
+<meta property="og:description" content="设置UIView的属性:
+
+Position 位置
+Opacity 透明度
+Scale 比例
+Color 颜色
+
+
+设置变化:
+
+Rotation 旋转
+Repeat 重复
+Easing  曲线
+spring  弹簧">
+<meta property="og:updated_time" content="2016-12-02T12:42:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UIViewAnimation基础">
+<meta name="twitter:description" content="设置UIView的属性:
+
+Position 位置
+Opacity 透明度
+Scale 比例
+Color 颜色
+
+
+设置变化:
+
+Rotation 旋转
+Repeat 重复
+Easing  曲线
+spring  弹簧">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Lalo</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">LIFE IS SIMPLE, LOVE SMILE AND CODE</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="yoursite.com">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-uiviewanimation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/01/uiviewanimation/" class="article-date">
+  <time datetime="2016-12-01T13:18:33.000Z" itemprop="datePublished">2016-12-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS-Development/">iOS Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      UIViewAnimation基础
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h3 id="设置UIView的属性"><a href="#设置UIView的属性" class="headerlink" title="设置UIView的属性:"></a>设置UIView的属性:</h3><blockquote>
+<ul>
+<li>Position 位置</li>
+<li>Opacity 透明度</li>
+<li>Scale 比例</li>
+<li>Color 颜色</li>
+</ul>
+</blockquote>
+<h3 id="设置变化"><a href="#设置变化" class="headerlink" title="设置变化:"></a>设置变化:</h3><blockquote>
+<ul>
+<li>Rotation 旋转</li>
+<li>Repeat 重复</li>
+<li>Easing  曲线</li>
+<li>spring  弹簧</li>
+</ul>
+</blockquote>
+<hr>
+<a id="more"></a>
+<h3 id="动画方法"><a href="#动画方法" class="headerlink" title="动画方法"></a>动画方法</h3><blockquote>
+<ul>
+<li>在一定时间内 View 的属性发生改变,动画结束后回调。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">classfunc animateWithDuration(duration:NSTimeInterval, animations: () -&gt;Void, completion: ((Bool) -&gt;Void)?)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<hr>
+<blockquote>
+<ul>
+<li>在一定时间内 View 的属性发生改变。无回调。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">classfunc animateWithDuration(duration:NSTimeInterval, animations: () -&gt;Void)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<hr>
+<blockquote>
+<ul>
+<li>可以设置动画执行的方式<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">classfunc animateWithDuration(duration:NSTimeInterval, delay:NSTimeInterval, options:UIViewAnimationOptions, animations: () -&gt;Void, completion: ((Bool) -&gt;Void)?)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>参数说明:<ul>
+<li>duration  : 动画经历时长</li>
+<li>delay : 延迟时间,在该延迟时间后才执行动画</li>
+<li>options : 系统提供了许多动画执行的方式,比如以下几个<ul>
+<li>Repeat  : UIViewAnimationOptions  重复</li>
+<li>CurveEaseInOut  : UIViewAnimationOptions 由慢到快再到慢</li>
+<li>CurveEaseIn : UIViewAnimationOptions 由慢到快</li>
+<li>CurveEaseOut  : UIViewAnimationOptions 由快到慢</li>
+<li>CurveLinear : UIViewAnimationOptions 匀速</li>
+</ul>
+</li>
+<li>animation : UIView动画结束时的状态  ( 比如 ： UIView移动到另一点,变成某一种颜色,放大(缩小)后的比例,变化到某一透明度,视图旋转到某一角度)</li>
+<li>completion  : 动画结束时的回调(这里可以处理一些事件)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<blockquote>
+<ul>
+<li>可设置弹跳效果的动画<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">    classfunc animateWithDuration(duration:NSTimeInterval, delay:NSTimeInterval, usingSpringWithDamping dampingRatio:CGFloat, initialSpringVelocity velocity:CGFloat, options:UIViewAnimationOptions, animations: () -&gt;Void, completion: ((Bool) -&gt;Void)?)</div><div class="line">```  </div><div class="line">    * 参数说明:</div><div class="line">      * usingSpringWithDamping  : 阻尼（弹性系数）</div><div class="line">      * initialSpringVelocity : 初始速率</div><div class="line"></div><div class="line">-----</div><div class="line">### 示例</div><div class="line">1.Position 位置</div><div class="line"></div><div class="line">![Position.gif](http://upload-images.jianshu.io/upload_images/1754617-9c33234c8e5259d2.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>UIView.animate(withDuration: 1, animations:{<br>    self.greenView.center.x = self.view.bounds.width - self.greenView.center.x<br>    self.greenView.center.y = self.view.bounds.height - self.greenView.center.y<br>})</p>
+<p>UIView.animate(withDuration: 1, delay: 0.5, options: UIViewAnimationOptions.curveEaseInOut, animations: {<br>    self.redView.center.x = self.view.bounds.width - self.redView.center.x<br>    self.redView.center.y = self.redView.center.y - self.view.bounds.height<br>}, completion: nil)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">2.Opacity 透明度</div><div class="line"></div><div class="line">![Opacity.gif](http://upload-images.jianshu.io/upload_images/1754617-d4c4474c0eecc9a1.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure>
+<p>UIView.animate(withDuration: 1, animations: {<br>    self.OpacityView.alpha = 0.1<br>})<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">3.Scale 比例</div><div class="line"></div><div class="line">![Scale.gif](http://upload-images.jianshu.io/upload_images/1754617-fe25930e98a5a6c0.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure></p>
+<p>UIView.animate(withDuration: 1, animations: {<br>    self.scaleView.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)<br>})<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">4.Color 颜色</div><div class="line"></div><div class="line">![Color.gif](http://upload-images.jianshu.io/upload_images/1754617-87208fb0d63c9cc8.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure></p>
+<p>UIView.animate(withDuration: 1, animations: {<br>    self.backgroundView.backgroundColor = UIColor.black<br>    self.textLabel.textColor = UIColor.yellow<br>})<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">5.Rotation 旋转</div><div class="line"></div><div class="line">![Rotation.gif](http://upload-images.jianshu.io/upload_images/1754617-401af2d53905eec3.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure></p>
+<p>UIView.animate(withDuration: 1, animations: {<br>    self.iamgeView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))<br>})<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">6.Repeat 重复</div><div class="line"></div><div class="line">![Repeat.gif](http://upload-images.jianshu.io/upload_images/1754617-b1165302ef69e0a0.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure></p>
+<p>UIView.animate(withDuration: 1, animations: {<br>    self.blueView.center.x = self.view.bounds.width - self.blueView.center.x<br>})</p>
+<p>UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.repeat, animations: {<br>    self.redView.center.x = self.view.bounds.width - self.redView.center.x<br>}, completion: nil)</p>
+<p>UIView.animate(withDuration: 1, delay: 0, options: [UIViewAnimationOptions.repeat, UIViewAnimationOptions.autoreverse], animations: {<br>    self.greenView.center.x = self.view.bounds.width - self.greenView.center.x<br>}, completion: nil)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">7.Easing 曲线</div><div class="line"></div><div class="line">![Easing.gif](http://upload-images.jianshu.io/upload_images/1754617-0c02b169c6d0c861.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure></p>
+<p>UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: {<br>    self.blueView.center.x = self.view.bounds.width - self.blueView.center.x<br>}, completion: nil)</p>
+<p>UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {<br>    self.redView.center.x = self.view.bounds.width - self.redView.center.x<br>}, completion: nil)</p>
+<p>UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {<br>    self.greenView.center.x = self.view.bounds.width - self.greenView.center.x<br>}, completion: nil)</p>
+<p>UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {<br>    self.yellowView.center.x = self.view.bounds.width - self.yellowView.center.x<br>}, completion: nil)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">8.spring 弹簧</div><div class="line"></div><div class="line">![Spring.gif](http://upload-images.jianshu.io/upload_images/1754617-614cfb67a9ccad35.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure></p>
+<p>UIView.animate(withDuration: 1, animations: {<br>    self.blueView.center.x = self.view.bounds.width - self.blueView.center.x<br>})</p>
+<p>UIView.animate(withDuration: 3, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveLinear, animations: {<br>    self.redView.center.x = self.view.bounds.width  - self.redView.center.x<br>}, completion: nil)</p>
+<p>UIView.animate(withDuration: 3, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveLinear, animations: {<br>    self.greenView.center.x = self.view.bounds.width - self.greenView.center.x<br>}, completion: nil)<br>```</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/12/01/uiviewanimation/" data-id="ciw7s6bie0006l5fyg02nuovs" class="article-share-link">Share</a>
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Animation/">Animation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UI/">UI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/01/uiapplication/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">UIApplication</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-Development/">C Development</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS-Development/">iOS Development</a><span class="category-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Animation/">Animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pointer/">Pointer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UI/">UI</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/block/">block</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Animation/" style="font-size: 10px;">Animation</a> <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Pointer/" style="font-size: 10px;">Pointer</a> <a href="/tags/UI/" style="font-size: 15px;">UI</a> <a href="/tags/block/" style="font-size: 15px;">block</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Lalo<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
