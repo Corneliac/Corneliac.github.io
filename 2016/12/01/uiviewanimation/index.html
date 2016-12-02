@@ -38,7 +38,15 @@ Rotation 旋转
 Repeat 重复
 Easing  曲线
 spring  弹簧">
-<meta property="og:updated_time" content="2016-12-02T12:42:38.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-9c33234c8e5259d2.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-d4c4474c0eecc9a1.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-fe25930e98a5a6c0.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-87208fb0d63c9cc8.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-401af2d53905eec3.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-b1165302ef69e0a0.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-0c02b169c6d0c861.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-614cfb67a9ccad35.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2016-12-02T12:57:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UIViewAnimation基础">
 <meta name="twitter:description" content="设置UIView的属性:
@@ -55,6 +63,7 @@ Rotation 旋转
 Repeat 重复
 Easing  曲线
 spring  弹簧">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1754617-9c33234c8e5259d2.gif?imageMogr2/auto-orient/strip">
   
   
     <link rel="icon" href="/favicon.png">
@@ -165,10 +174,8 @@ spring  弹簧">
 <hr>
 <blockquote>
 <ul>
-<li>可以设置动画执行的方式<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">classfunc animateWithDuration(duration:NSTimeInterval, delay:NSTimeInterval, options:UIViewAnimationOptions, animations: () -&gt;Void, completion: ((Bool) -&gt;Void)?)</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</blockquote>
+<li><p>可以设置动画执行的方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">classfunc animateWithDuration(duration:NSTimeInterval, delay:NSTimeInterval, options:UIViewAnimationOptions, animations: () -&gt;Void, completion: ((Bool) -&gt;Void)?)</div></pre></td></tr></table></figure>
 <ul>
 <li>参数说明:<ul>
 <li>duration  : 动画经历时长</li>
@@ -186,36 +193,45 @@ spring  弹簧">
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 <hr>
-<blockquote>
 <ul>
-<li>可设置弹跳效果的动画<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">    classfunc animateWithDuration(duration:NSTimeInterval, delay:NSTimeInterval, usingSpringWithDamping dampingRatio:CGFloat, initialSpringVelocity velocity:CGFloat, options:UIViewAnimationOptions, animations: () -&gt;Void, completion: ((Bool) -&gt;Void)?)</div><div class="line">```  </div><div class="line">    * 参数说明:</div><div class="line">      * usingSpringWithDamping  : 阻尼（弹性系数）</div><div class="line">      * initialSpringVelocity : 初始速率</div><div class="line"></div><div class="line">-----</div><div class="line">### 示例</div><div class="line">1.Position 位置</div><div class="line"></div><div class="line">![Position.gif](http://upload-images.jianshu.io/upload_images/1754617-9c33234c8e5259d2.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure>
+<li><p>可设置弹跳效果的动画</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">classfunc animateWithDuration(duration:NSTimeInterval, delay:NSTimeInterval, usingSpringWithDamping dampingRatio:CGFloat, initialSpringVelocity velocity:CGFloat, options:UIViewAnimationOptions, animations: () -&gt;Void, completion: ((Bool) -&gt;Void)?)</div></pre></td></tr></table></figure>
+<ul>
+<li>参数说明:<ul>
+<li>usingSpringWithDamping  : 阻尼（弹性系数）</li>
+<li>initialSpringVelocity : 初始速率</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 </blockquote>
-<p>UIView.animate(withDuration: 1, animations:{<br>    self.greenView.center.x = self.view.bounds.width - self.greenView.center.x<br>    self.greenView.center.y = self.view.bounds.height - self.greenView.center.y<br>})</p>
-<p>UIView.animate(withDuration: 1, delay: 0.5, options: UIViewAnimationOptions.curveEaseInOut, animations: {<br>    self.redView.center.x = self.view.bounds.width - self.redView.center.x<br>    self.redView.center.y = self.redView.center.y - self.view.bounds.height<br>}, completion: nil)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">2.Opacity 透明度</div><div class="line"></div><div class="line">![Opacity.gif](http://upload-images.jianshu.io/upload_images/1754617-d4c4474c0eecc9a1.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure>
-<p>UIView.animate(withDuration: 1, animations: {<br>    self.OpacityView.alpha = 0.1<br>})<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">3.Scale 比例</div><div class="line"></div><div class="line">![Scale.gif](http://upload-images.jianshu.io/upload_images/1754617-fe25930e98a5a6c0.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure></p>
-<p>UIView.animate(withDuration: 1, animations: {<br>    self.scaleView.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)<br>})<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">4.Color 颜色</div><div class="line"></div><div class="line">![Color.gif](http://upload-images.jianshu.io/upload_images/1754617-87208fb0d63c9cc8.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure></p>
-<p>UIView.animate(withDuration: 1, animations: {<br>    self.backgroundView.backgroundColor = UIColor.black<br>    self.textLabel.textColor = UIColor.yellow<br>})<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">5.Rotation 旋转</div><div class="line"></div><div class="line">![Rotation.gif](http://upload-images.jianshu.io/upload_images/1754617-401af2d53905eec3.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure></p>
-<p>UIView.animate(withDuration: 1, animations: {<br>    self.iamgeView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))<br>})<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">6.Repeat 重复</div><div class="line"></div><div class="line">![Repeat.gif](http://upload-images.jianshu.io/upload_images/1754617-b1165302ef69e0a0.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure></p>
-<p>UIView.animate(withDuration: 1, animations: {<br>    self.blueView.center.x = self.view.bounds.width - self.blueView.center.x<br>})</p>
-<p>UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.repeat, animations: {<br>    self.redView.center.x = self.view.bounds.width - self.redView.center.x<br>}, completion: nil)</p>
-<p>UIView.animate(withDuration: 1, delay: 0, options: [UIViewAnimationOptions.repeat, UIViewAnimationOptions.autoreverse], animations: {<br>    self.greenView.center.x = self.view.bounds.width - self.greenView.center.x<br>}, completion: nil)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">7.Easing 曲线</div><div class="line"></div><div class="line">![Easing.gif](http://upload-images.jianshu.io/upload_images/1754617-0c02b169c6d0c861.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure></p>
-<p>UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: {<br>    self.blueView.center.x = self.view.bounds.width - self.blueView.center.x<br>}, completion: nil)</p>
-<p>UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {<br>    self.redView.center.x = self.view.bounds.width - self.redView.center.x<br>}, completion: nil)</p>
-<p>UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {<br>    self.greenView.center.x = self.view.bounds.width - self.greenView.center.x<br>}, completion: nil)</p>
-<p>UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {<br>    self.yellowView.center.x = self.view.bounds.width - self.yellowView.center.x<br>}, completion: nil)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">8.spring 弹簧</div><div class="line"></div><div class="line">![Spring.gif](http://upload-images.jianshu.io/upload_images/1754617-614cfb67a9ccad35.gif?imageMogr2/auto-orient/strip)</div></pre></td></tr></table></figure></p>
-<p>UIView.animate(withDuration: 1, animations: {<br>    self.blueView.center.x = self.view.bounds.width - self.blueView.center.x<br>})</p>
-<p>UIView.animate(withDuration: 3, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveLinear, animations: {<br>    self.redView.center.x = self.view.bounds.width  - self.redView.center.x<br>}, completion: nil)</p>
-<p>UIView.animate(withDuration: 3, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveLinear, animations: {<br>    self.greenView.center.x = self.view.bounds.width - self.greenView.center.x<br>}, completion: nil)<br>```</p>
+<hr>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>1.Position 位置</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1754617-9c33234c8e5259d2.gif?imageMogr2/auto-orient/strip" alt="Position.gif"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">UIView.animate(withDuration: 1, animations:&#123;</div><div class="line">    self.greenView.center.x = self.view.bounds.width - self.greenView.center.x</div><div class="line">    self.greenView.center.y = self.view.bounds.height - self.greenView.center.y   </div><div class="line">&#125;)</div><div class="line"></div><div class="line">UIView.animate(withDuration: 1, delay: 0.5, options: UIViewAnimationOptions.curveEaseInOut, animations: &#123;</div><div class="line">    self.redView.center.x = self.view.bounds.width - self.redView.center.x</div><div class="line">    self.redView.center.y = self.redView.center.y - self.view.bounds.height</div><div class="line">&#125;, completion: nil)</div></pre></td></tr></table></figure></p>
+<p>2.Opacity 透明度</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1754617-d4c4474c0eecc9a1.gif?imageMogr2/auto-orient/strip" alt="Opacity.gif"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">UIView.animate(withDuration: 1, animations: &#123;</div><div class="line">    self.OpacityView.alpha = 0.1</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>3.Scale 比例</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1754617-fe25930e98a5a6c0.gif?imageMogr2/auto-orient/strip" alt="Scale.gif"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">UIView.animate(withDuration: 1, animations: &#123;</div><div class="line">    self.scaleView.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>4.Color 颜色</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1754617-87208fb0d63c9cc8.gif?imageMogr2/auto-orient/strip" alt="Color.gif"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">UIView.animate(withDuration: 1, animations: &#123;</div><div class="line">    self.backgroundView.backgroundColor = UIColor.black</div><div class="line">    self.textLabel.textColor = UIColor.yellow</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>5.Rotation 旋转</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1754617-401af2d53905eec3.gif?imageMogr2/auto-orient/strip" alt="Rotation.gif"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">UIView.animate(withDuration: 1, animations: &#123;</div><div class="line">    self.iamgeView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))    </div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>6.Repeat 重复</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1754617-b1165302ef69e0a0.gif?imageMogr2/auto-orient/strip" alt="Repeat.gif"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">UIView.animate(withDuration: 1, animations: &#123;</div><div class="line">    self.blueView.center.x = self.view.bounds.width - self.blueView.center.x</div><div class="line">&#125;)</div><div class="line"></div><div class="line">UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.repeat, animations: &#123;</div><div class="line">    self.redView.center.x = self.view.bounds.width - self.redView.center.x</div><div class="line">&#125;, completion: nil)</div><div class="line"></div><div class="line">UIView.animate(withDuration: 1, delay: 0, options: [UIViewAnimationOptions.repeat, UIViewAnimationOptions.autoreverse], animations: &#123;</div><div class="line">    self.greenView.center.x = self.view.bounds.width - self.greenView.center.x</div><div class="line">&#125;, completion: nil)</div></pre></td></tr></table></figure></p>
+<p>7.Easing 曲线</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1754617-0c02b169c6d0c861.gif?imageMogr2/auto-orient/strip" alt="Easing.gif"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: &#123;</div><div class="line">    self.blueView.center.x = self.view.bounds.width - self.blueView.center.x</div><div class="line">&#125;, completion: nil)</div><div class="line"></div><div class="line">UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: &#123;</div><div class="line">    self.redView.center.x = self.view.bounds.width - self.redView.center.x</div><div class="line">&#125;, completion: nil)</div><div class="line"></div><div class="line">UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: &#123;</div><div class="line">    self.greenView.center.x = self.view.bounds.width - self.greenView.center.x</div><div class="line">&#125;, completion: nil)</div><div class="line"></div><div class="line">UIView.animate(withDuration: 1, delay: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: &#123;</div><div class="line">    self.yellowView.center.x = self.view.bounds.width - self.yellowView.center.x</div><div class="line">&#125;, completion: nil)</div></pre></td></tr></table></figure></p>
+<p>8.spring 弹簧</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1754617-614cfb67a9ccad35.gif?imageMogr2/auto-orient/strip" alt="Spring.gif"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">UIView.animate(withDuration: 1, animations: &#123;</div><div class="line">    self.blueView.center.x = self.view.bounds.width - self.blueView.center.x</div><div class="line">&#125;)</div><div class="line"></div><div class="line">UIView.animate(withDuration: 3, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveLinear, animations: &#123;</div><div class="line">    self.redView.center.x = self.view.bounds.width  - self.redView.center.x</div><div class="line">&#125;, completion: nil)</div><div class="line"></div><div class="line">UIView.animate(withDuration: 3, delay: 0, usingSpringWithDamping: 0.1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveLinear, animations: &#123;</div><div class="line">    self.greenView.center.x = self.view.bounds.width - self.greenView.center.x</div><div class="line">&#125;, completion: nil)</div></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://yoursite.com/2016/12/01/uiviewanimation/" data-id="ciw7s6bie0006l5fyg02nuovs" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2016/12/01/uiviewanimation/" data-id="ciw7sdjvt0006ujfy726pvvu8" class="article-share-link">Share</a>
       
 
       
