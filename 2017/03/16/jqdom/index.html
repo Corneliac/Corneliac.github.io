@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>jQ DOM操作之增删改 | Lalo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="创建
+节点插入
+节点删除
+节点复制与替换">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQ DOM操作之增删改">
+<meta property="og:url" content="http://yoursite.com/2017/03/16/jqdom/index.html">
+<meta property="og:site_name" content="Lalo">
+<meta property="og:description" content="创建
+节点插入
+节点删除
+节点复制与替换">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-df5655a66b52a8d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-e0a52692461c1296.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-497f7ea08d2782cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-a49c25972c7e83dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-78ce9731c37f8813.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-eb6fcb9f17d094cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-0adfa31ca3263df7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-6b448c23475e95d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-2e94d6182e34c964.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-28d2b72c4ee96c77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-01a495e92bf56d9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-d7ee373073a602ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-4b93225cf35bde2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-fd2fabed8841b645.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-08d28277069c3406.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-29d8be9f931be0f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-d5b31ef5da729e5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-c0632384a3b56543.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-8bc4601894f26823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1754617-02a831dc00498e6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-03-16T11:40:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQ DOM操作之增删改">
+<meta name="twitter:description" content="创建
+节点插入
+节点删除
+节点复制与替换">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1754617-df5655a66b52a8d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Lalo</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">LIFE IS SIMPLE, LOVE SMILE AND CODE</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="yoursite.com">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-jqdom" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/16/jqdom/" class="article-date">
+  <time datetime="2017-03-16T11:28:33.000Z" itemprop="datePublished">2017-03-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jQ DOM操作之增删改
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<blockquote>
+<ul>
+<li>创建</li>
+<li>节点插入</li>
+<li>节点删除</li>
+<li>节点复制与替换</li>
+</ul>
+</blockquote>
+<hr>
+<a id="more"></a>
+<h1 id="第一部分：创建"><a href="#第一部分：创建" class="headerlink" title="第一部分：创建"></a>第一部分：创建</h1><h3 id="1-创建元素节点"><a href="#1-创建元素节点" class="headerlink" title="1.创建元素节点"></a>1.创建元素节点</h3><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$(&apos;&lt;div&gt;&apos;)</div><div class="line">$(&apos;&lt;div/&gt;&apos;)</div><div class="line">$(&apos;&lt;div&gt;&lt;/div&gt;&apos;)</div><div class="line">$(&apos;&lt;div&gt;我是个div节点&lt;/div&gt;&apos;)</div><div class="line">$(&apos;&lt;div class=&quot;div1&quot;&gt;&apos;)</div><div class="line">$(&apos;&lt;div class=&quot;div2&quot;&gt;我是class=&quot;div2&quot;的div&lt;/div&gt;&apos;)</div><div class="line">$(&apos;&lt;div&gt;&lt;div&gt;我的div内的div&lt;/div&gt;&lt;/div&gt;&apos;)</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/1754617-df5655a66b52a8d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/1754617-e0a52692461c1296.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</blockquote>
+<hr>
+<h1 id="第二部分：节点插入"><a href="#第二部分：节点插入" class="headerlink" title="第二部分：节点插入"></a>第二部分：节点插入</h1><h3 id="1-内部插入"><a href="#1-内部插入" class="headerlink" title="1.内部插入"></a>1.内部插入</h3><blockquote>
+<ul>
+<li><h5 id="append-给儿子们最后面加个小兄弟-结合appendTo-来记"><a href="#append-给儿子们最后面加个小兄弟-结合appendTo-来记" class="headerlink" title=".append 给儿子们最后面加个小兄弟 (结合appendTo()来记)"></a>.append 给儿子们最后面加个小兄弟 (结合appendTo()来记)</h5></li>
+<li><h5 id="prepend-给儿子们最前面加个私生大兄弟-结合prependTo-来记"><a href="#prepend-给儿子们最前面加个私生大兄弟-结合prependTo-来记" class="headerlink" title=".prepend 给儿子们最前面加个私生大兄弟(结合prependTo()来记)"></a>.prepend 给儿子们最前面加个私生大兄弟(结合prependTo()来记)</h5><img src="http://upload-images.jianshu.io/upload_images/1754617-497f7ea08d2782cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+</blockquote>
+<h3 id="2-外部插入"><a href="#2-外部插入" class="headerlink" title="2.外部插入"></a>2.外部插入</h3><blockquote>
+<ul>
+<li><h5 id="before-我的前面加个兄弟-结合insertBefore来记"><a href="#before-我的前面加个兄弟-结合insertBefore来记" class="headerlink" title=".before 我的前面加个兄弟(结合insertBefore来记)"></a>.before 我的前面加个兄弟(结合insertBefore来记)</h5></li>
+<li><h5 id="after-我的后面加个兄弟-结合insertAfter-来记"><a href="#after-我的后面加个兄弟-结合insertAfter-来记" class="headerlink" title=".after 我的后面加个兄弟(结合insertAfter()来记)"></a>.after 我的后面加个兄弟(结合insertAfter()来记)</h5><img src="http://upload-images.jianshu.io/upload_images/1754617-a49c25972c7e83dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+</blockquote>
+<hr>
+<h1 id="第三部分：节点删除"><a href="#第三部分：节点删除" class="headerlink" title="第三部分：节点删除"></a>第三部分：节点删除</h1><h3 id="1-empty"><a href="#1-empty" class="headerlink" title="1.empty"></a>1.empty</h3><blockquote>
+<ul>
+<li><h5 id="empty-身体被掏空"><a href="#empty-身体被掏空" class="headerlink" title=".empty 身体被掏空"></a>.empty 身体被掏空</h5><img src="http://upload-images.jianshu.io/upload_images/1754617-78ce9731c37f8813.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/1754617-eb6fcb9f17d094cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+</blockquote>
+<h3 id="2-remove"><a href="#2-remove" class="headerlink" title="2.remove"></a>2.remove</h3><blockquote>
+<ul>
+<li><h5 id="remove-自杀"><a href="#remove-自杀" class="headerlink" title=".remove 自杀"></a>.remove 自杀</h5><img src="http://upload-images.jianshu.io/upload_images/1754617-0adfa31ca3263df7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/1754617-6b448c23475e95d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+</blockquote>
+<h3 id="3-detach"><a href="#3-detach" class="headerlink" title="3.detach"></a>3.detach</h3><blockquote>
+<ul>
+<li><h5 id="detach-隐身"><a href="#detach-隐身" class="headerlink" title=".detach 隐身"></a>.detach 隐身</h5><img src="http://upload-images.jianshu.io/upload_images/1754617-2e94d6182e34c964.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/1754617-28d2b72c4ee96c77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+</blockquote>
+<hr>
+<h1 id="第四部分：节点的复制与替换"><a href="#第四部分：节点的复制与替换" class="headerlink" title="第四部分：节点的复制与替换"></a>第四部分：节点的复制与替换</h1><h3 id="1-clone"><a href="#1-clone" class="headerlink" title="1.clone"></a>1.clone</h3><blockquote>
+<ul>
+<li><h5 id="clone-只克隆了结构，事件丢失"><a href="#clone-只克隆了结构，事件丢失" class="headerlink" title=".clone()  只克隆了结构，事件丢失"></a>.clone()  只克隆了结构，事件丢失</h5></li>
+<li><h5 id="clone-true-结构、事件与数据都克隆"><a href="#clone-true-结构、事件与数据都克隆" class="headerlink" title=".clone(true)  结构、事件与数据都克隆"></a>.clone(true)  结构、事件与数据都克隆</h5><img src="http://upload-images.jianshu.io/upload_images/1754617-01a495e92bf56d9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/1754617-d7ee373073a602ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+</blockquote>
+<h3 id="2-replace"><a href="#2-replace" class="headerlink" title="2.replace"></a>2.replace</h3><blockquote>
+<ul>
+<li><h5 id="replaceWith-删除并替换节点（结合-replaceAll-来记）"><a href="#replaceWith-删除并替换节点（结合-replaceAll-来记）" class="headerlink" title=".replaceWith 删除并替换节点（结合.replaceAll()来记）"></a>.replaceWith 删除并替换节点（结合.replaceAll()来记）</h5><img src="http://upload-images.jianshu.io/upload_images/1754617-4b93225cf35bde2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/1754617-fd2fabed8841b645.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+</blockquote>
+<h3 id="3-wrap-and-unwrap"><a href="#3-wrap-and-unwrap" class="headerlink" title="3.wrap and unwrap"></a>3.wrap and unwrap</h3><blockquote>
+<ul>
+<li><h5 id="wrap-每个都加个外衣"><a href="#wrap-每个都加个外衣" class="headerlink" title=".wrap 每个都加个外衣"></a>.wrap 每个都加个外衣</h5></li>
+<li><h5 id="unwrap-去掉包裹"><a href="#unwrap-去掉包裹" class="headerlink" title=".unwrap 去掉包裹"></a>.unwrap 去掉包裹</h5><img src="http://upload-images.jianshu.io/upload_images/1754617-08d28277069c3406.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/1754617-29d8be9f931be0f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+</blockquote>
+<h3 id="4-wrapAll"><a href="#4-wrapAll" class="headerlink" title="4.wrapAll"></a>4.wrapAll</h3><blockquote>
+<ul>
+<li><h5 id="wrapAll-被包裹成亲兄弟"><a href="#wrapAll-被包裹成亲兄弟" class="headerlink" title=".wrapAll() 被包裹成亲兄弟"></a>.wrapAll() 被包裹成亲兄弟</h5></li>
+<li><h5 id="wrapAll-function-被包裹成表兄弟堂兄弟"><a href="#wrapAll-function-被包裹成表兄弟堂兄弟" class="headerlink" title=".wrapAll( function ) 被包裹成表兄弟堂兄弟"></a>.wrapAll( function ) 被包裹成表兄弟堂兄弟</h5><img src="http://upload-images.jianshu.io/upload_images/1754617-d5b31ef5da729e5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/1754617-c0632384a3b56543.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+</blockquote>
+<h3 id="5-wrapInner"><a href="#5-wrapInner" class="headerlink" title="5.wrapInner"></a>5.wrapInner</h3><blockquote>
+<ul>
+<li><h5 id="wrapInner-wrappingElement-：给集合中匹配的元素的内部，增加包裹的HTML结构"><a href="#wrapInner-wrappingElement-：给集合中匹配的元素的内部，增加包裹的HTML结构" class="headerlink" title=".wrapInner( wrappingElement )：给集合中匹配的元素的内部，增加包裹的HTML结构"></a>.wrapInner( wrappingElement )：给集合中匹配的元素的内部，增加包裹的HTML结构</h5></li>
+<li><h5 id="wrapInner-function-：允许我们用一个callback函数做参数，每次遇到匹配元素时，该函数被执行，返回一个DOM元素，jQuery对象，或者HTML片段，用来包住匹配元素的内容"><a href="#wrapInner-function-：允许我们用一个callback函数做参数，每次遇到匹配元素时，该函数被执行，返回一个DOM元素，jQuery对象，或者HTML片段，用来包住匹配元素的内容" class="headerlink" title=".wrapInner( function ) ：允许我们用一个callback函数做参数，每次遇到匹配元素时，该函数被执行，返回一个DOM元素，jQuery对象，或者HTML片段，用来包住匹配元素的内容"></a>.wrapInner( function ) ：允许我们用一个callback函数做参数，每次遇到匹配元素时，该函数被执行，返回一个DOM元素，jQuery对象，或者HTML片段，用来包住匹配元素的内容</h5><img src="http://upload-images.jianshu.io/upload_images/1754617-8bc4601894f26823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/1754617-02a831dc00498e6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2017/03/16/jqdom/" data-id="cj0cbqnse0004vps6j4fnwi1d" class="article-share-link">Share</a>
+      
+
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DOM/">DOM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/01/uiviewanimation/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">UIViewAnimation基础</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-Development/">C Development</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS-Development/">iOS Development</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jQuery/">jQuery</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Animation/">Animation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/">DOM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pointer/">Pointer</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UI/">UI</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/block/">block</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jQuery/">jQuery</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Animation/" style="font-size: 10px;">Animation</a> <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Pointer/" style="font-size: 10px;">Pointer</a> <a href="/tags/UI/" style="font-size: 15px;">UI</a> <a href="/tags/block/" style="font-size: 15px;">block</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/jQuery/" style="font-size: 10px;">jQuery</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Lalo<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
